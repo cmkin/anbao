@@ -4,19 +4,20 @@ Vue.use(vueRouter)
 
 const routes = [{
 	path: '',
-	component: () => import('_c/main/index'),
-	children: [{
+	component: () => import('_v/index/index'),
+	meta: {
+		title: "首页",
+		noCheak: true
+	},
+	children: [/* {
 			path: '',
 			redirect: 'index'
 		},
 		{
 			path: 'index',
 			component: () => import('_v/index/index'),
-			meta: {
-				title: "首页",
-				noCheak: true
-			}
-		},
+			
+		}, */
 	]
 }]
 
