@@ -18,19 +18,8 @@ export default {
 
 <style>
  @import url("./assets/css/reset.css");
- @media (max-width:414px) {
- 	html{
- 		font-size: 20px;
- 	}
- }
- @media (max-width:375px) {
- 	html{
- 		font-size: 18px;
- 	}
- }
- @media (max-width:320px) {
- 	html{
-		font-size: 15px;
-	}
+ #app{
+	 max-width: 1024px;
+	 margin: auto;
  }
 </style>

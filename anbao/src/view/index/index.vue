@@ -25,12 +25,14 @@
 				<span></span>
 			</div>
 		</div>
-		<div style="height: 80px;"></div>
-		<ul class="main clearfix">
-			<li v-for="item in 9">
-				<div></div>
-			</li>
-		</ul>
+		
+		<div class="main_wrap">
+			<ul class="main clearfix">
+				<li v-for="item in lists">
+					<img :src="item.img" alt="">
+				</li>
+			</ul>
+		</div>
 		
 		<div>
 			
@@ -43,7 +45,44 @@
 	export default {
 		data(){
 			return{
-				
+				lists:[
+					{
+					  img:require("_a/img/2.png"),
+					  type:0
+					},
+					{
+					  img:require("_a/img/8.png"),
+					  type:1
+					},
+					{
+					  img:require("_a/img/6.png"),
+					  type:2
+					},
+					{
+					  img:require("_a/img/5.png"),
+					  type:3
+					},
+					{
+					  img:require("_a/img/1.png"),
+					  type:4
+					},
+					{
+					  img:require("_a/img/4.png"),
+					  type:5
+					},
+					{
+					  img:require("_a/img/3.png"),
+					  type:6
+					},
+					{
+					  img:require("_a/img/7.png"),
+					  type:7
+					},
+					{
+					  img:require("_a/img/9.png"),
+					  type:8
+					},
+				]
 			}
 		},
 		mounted() {
@@ -57,9 +96,9 @@
 
 <style lang="less" scoped="scoped">
 	.view_index{
-		background: url(../../assets/img/module/client/clientRes/Newtex/home/xinaiwai/bg1.1d8b8.png) no-repeat 0 0;
+		background: url(../../assets/img/bg1.png) no-repeat 0 0;
 		background-size: 100% 100%;
-		width: 100vw;
+		width: 100%;
 		overflow-y: scroll;
 		height: 100vh;
 		.header{
@@ -137,58 +176,31 @@
 			}
 		}
 		
+		.main_wrap{
+			height: 100vh;
+			box-sizing: border-box;
+			overflow-y: auto;
+			padding-top: 80px;
+		}
 		.main{
+			display: flex;
 			padding: 0 8%;
+			
+			flex-wrap: wrap;
 			li{
-				float: left;
-				height: 120px;
-				background-color: red;
-				margin-bottom: 1rem;
+				
+				margin-bottom: 15px;
 				width: 46%;
 				border-radius: 15px;
+				img{
+					display: block;
+					width: 100%;
+				}
 			}
 			li:nth-child(2n){
 				margin-left: 8%;
 			}
-			li{
-				background: url(../../assets/img/module/client/clientRes/Newtex/AutoAtlas-2.92bbc.png) no-repeat 0 0;
-				background-position: -16rem -12.2rem;
-				background-size: 26rem auto;
-			}
-			li:nth-child(1){
-				background-position: -8rem -0.2rem;
-			}
-			li:nth-child(2){
-				background-position: -16rem -12.2rem;
-			}
-			li:nth-child(3){
-				background-position: -16.2rem -6.2rem;
-			}
-			li:nth-child(4){
-				background-position: -8.2rem -6.2rem;
 			
-			}
-			li:nth-child(5){
-				background-position: -0.2rem -0.2rem;
-			}
-			li:nth-child(6){
-				background-position: -0.2rem -6.2rem;
-			}
-			li:nth-child(7){
-				background-position: -16.2rem -0.2rem;
-			}
-			li:nth-child(8){
-				background-position: -0.2rem -12.2rem;
-			}
-			li:nth-child(9){
-				div{
-				  width: 120px;
-				  height: 40vw;
-				  transform: rotate(-90deg);
-				  background-position: -0.8rem -19.2rem;
-				}
-				
-			}
 			
 		}
 		
