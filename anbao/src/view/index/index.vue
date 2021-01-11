@@ -17,26 +17,48 @@
 				</li>
 			</ul>
 			<div class="fk clearfix">
-				<span></span>
+				<img src="../../assets/img/index/20.png" alt="">
 				<span>0</span>
 			</div>
 			<div class="r">
-				<span></span>
-				<span></span>
+				<img v-clicked src="../../assets/img/index/18.png" alt="">
+				<img v-clicked src="../../assets/img/index/7.png" alt="">
 			</div>
 		</div>
-		
-		<div class="main_wrap">
+		<scrolltop>
+		<div class="main_wrap">	
+			
 			<ul class="main clearfix">
-				<li v-for="item in lists">
-					<img :src="item.img" alt="">
-				</li>
+				
+					<li @click="flag.lb = true" v-clicked v-for="(item,index) in lists" :key="index">
+						<img :src="item.img" alt="">
+					</li>
+				
 			</ul>
-		</div>
 		
+		</div>
+		</scrolltop>
 		<div>
 			
 		</div>
+
+
+		<div class="tips">
+			<img src="../../assets/img/16.png" alt="">
+			<div>
+				<van-notice-bar scrollable text="通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知" />
+			</div>
+		</div>
+
+
+		<diglogx v-model="flag.lb">
+			<template v-slot:content>
+				<div class="a_changel">
+
+				</div>
+			</template>
+		</diglogx>
+
 		
 	</div>
 </template>
@@ -45,6 +67,9 @@
 	export default {
 		data(){
 			return{
+				flag:{
+					lb:true
+				},
 				lists:[
 					{
 					  img:require("_a/img/2.png"),
@@ -106,12 +131,12 @@
 			top: 0;
 			left: 0;
 			width: 100%;
-			background-image: url(../../assets/img/module/client/clientRes/Newtex/AutoAtlas-3.fc0e4.png);
-			background-position: -9rem 0;
-			background-size: 32rem auto;
+			z-index: 100;
+			background: url(../../assets/img/index/3.png) no-repeat 0 0;
+			background-size: 100% 100%;
 			background-color: #5F86BC;
 			color: #fff;
-			height: 3rem;
+			height: 60px;
 			box-sizing: border-box;
 			padding: 5px;
 			&>img{
@@ -132,20 +157,16 @@
 			.fk{
 				float: left;
 				padding-left: 20px;
-				padding-top: 8px;
-				span{
+				padding-top: 18px;
+				span,img{
 					float: left;
 				}
-				span:first-child{
+				img:first-child{
 					display: inline-block;
-					background: url(../../assets/img/module/client/clientRes/Newtex/AutoAtlas-3.fc0e4.png) no-repeat 0 0;
-					background-position: 0 -30rem;
-					background-size: 32rem auto;
-					width:2.25rem;
-					height: 1.85rem;
+					width:30px;
+					height: 22px;
 				}
 				span:last-child{
-					padding-top: 6px;
 					font-size: 16px;
 					padding-left: 5px;
 				}
@@ -153,33 +174,28 @@
 			}
 			.r{
 				float: right;
-				span{
+				padding-right: 10px;
+				padding-top: 10px;
+				img{
 					display: inline-block;
-					background: url(../../assets/img/module/client/clientRes/Newtex/AutoAtlas-3.fc0e4.png) no-repeat 0 0;
-					background-position: -4.5rem -27rem;
-					background-size: 29rem auto;
-					width:2.25rem;
-					height: 1.85rem;
 				}
-				span:first-child{
+				img:first-child{
 					transform: rotate(-90deg);
-					width: 3rem;
-					background-position: -4.2rem -27rem;
+					width: 35px;
+					height: 30px;
 				}
-				span:last-child{
-					height: 2.25rem;
-					background-position: -4.9rem -20.5rem;
-					position: relative;
-					top: 0.5rem;
-					right: 0.1rem;
+				img:last-child{
+					margin-left: 10px;
+					width: 35px;
+					height: 35px;
 				}
 			}
 		}
 		
 		.main_wrap{
-			height: 100vh;
+		
 			box-sizing: border-box;
-			overflow-y: auto;
+			
 			padding-top: 80px;
 		}
 		.main{
@@ -203,6 +219,45 @@
 			
 			
 		}
+
+		.tips{
+			position: fixed;
+			top: 16%;
+			width: 98%;
+			left: 1%;
+			background: rgba(0, 0, 0, 0.5);
+			box-sizing: border-box;
+			padding: 3px;
+			border-radius: 5px;
+			&>img{
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				position: relative;
+				top: 2px;
+				left: 3px;
+			}
+			&>div{
+				display: inline-block;
+				padding: 0 10px;
+				box-sizing: border-box;
+				width: calc(100% - 20px);
+			}
+		}
 		
 	}
+
+	
+</style>
+<style lang="less">
+	.view_index{
+		.van-notice-bar{
+			background: none;
+			color: #fff;
+			padding: 0;
+			height: 15px;
+			line-height: 100%;
+		}
+	}
+	
 </style>

@@ -6,6 +6,8 @@ Vue.config.productionTip = false
 
 import router from './router'
 
+import '@/uilt/index'
+
 new Vue({
   render: h => h(App),
   router,
