@@ -1,9 +1,9 @@
 <template>
-    <div class="g_diglog" >
+    <div class="g_diglog" @click="$emit('input',false)">
         <div class="d_wrap" v-if="value"></div>
             <transition name="sc" mode="out-in">
 
-                 <div class="main" v-if="value">
+                 <div class="main" @click.stop v-if="value">
                     <div class="tops">
                         <div>
                             <img src="../assets/img/index/13.png" alt="">
@@ -52,6 +52,7 @@ export default {
             left: 0;
             width: 100vw;
             height: 100vh;
+			z-index: 1000;
             background-color: rgba(0, 0, 0, 0.5);
         }
             .main{
@@ -61,7 +62,7 @@ export default {
                 width: 90%;
                 background: url(../assets/img/index/4.png) 0 0 no-repeat;
                 background-size: 100% auto;
-               
+                z-index: 1001;
                 .tops{
                     position: relative;
                     text-align: center;
@@ -85,7 +86,11 @@ export default {
                         top: 15px;
                     }
                 }
-            }
+				
+				.content{
+					
+				}
+			}
         
        
     }

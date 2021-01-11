@@ -49,12 +49,77 @@
 				<van-notice-bar scrollable text="通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知" />
 			</div>
 		</div>
+		
+		<div class="bx">
+			<img v-clicked  src="../../assets/img/index/36.png" alt="">
+		</div>
+		
+		
+		
+		<div class="fonter">
+			<span>
+				<img src="../../assets/img/11.png" alt="" >
+			</span>
+			<span>
+				<img src="../../assets/img/12.png" alt="" >
+			</span>
+			<span>
+				<img src="../../assets/img/10.png" alt="" >
+			</span>
+		</div>
 
 
 		<diglogx v-model="flag.lb">
 			<template v-slot:content>
 				<div class="a_changel">
-
+					<div class="top">
+						<van-button type="info" v-clicked>固定庄家</van-button>
+					</div>
+					<ul class="list">
+						<li class="clearfix">
+							<span>
+								筹码
+							</span>
+							<div>
+								<radiox :lists="radioL.cm" v-model="flag.cm"></radiox>
+							</div>
+						</li>
+						<li class="clearfix">
+							<span>上限</span>
+							<div>
+								<radiox :lists="radioL.sx" v-model="flag.sx"></radiox>
+							</div>
+						</li>
+						<li class="clearfix">
+							<span>
+								座位分
+							</span>
+							<div>
+								<radiox :lists="radioL.zwf" v-model="flag.zwf"></radiox>
+							</div>
+						</li>
+					</ul>
+					<ul class="list ls">
+						<li style="font-size: 16px;">赔率设置</li>
+						<li class="clearfix">
+							<span>龙,虎,</br>出,入</span>
+							<div>
+								<radiox :lists="radioL.lh" v-model="flag.lh"></radiox>
+							</div>
+						</li>
+						<li class="clearfix">
+							<span>同,粘</span>
+							<div>
+								<radiox :lists="radioL.tz" v-model="flag.tz"></radiox>
+							</div>
+						</li>
+						<li class="clearfix">
+							<span>角,串</span>
+							<div>
+								<radiox :lists="radioL.jc" v-model="flag.jc"></radiox>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</template>
 		</diglogx>
@@ -68,7 +133,95 @@
 		data(){
 			return{
 				flag:{
-					lb:true
+					lb:true,
+					cm:0,
+					sx:0,
+					zwf:0,
+					lh:0,
+					tz:0,
+					jc:0
+				},
+				radioL:{
+					cm:[
+						{
+							id:0,
+							text:'10,20,30,50,100'
+						},
+					],
+					sx:[
+						{
+							id:0,
+							text:'1000'
+						},
+					],
+					zwf:[
+						{
+							id:0,
+							text:'20'
+						},
+						{
+							id:1,
+							text:'30'
+						},
+						{
+							id:2,
+							text:'50'
+						},
+						{
+							id:3,
+							text:'100'
+						},
+					],
+					lh:[
+						{
+							id:0,
+							text:'1:3'
+						},
+						{
+							id:1,
+							text:'1:2.9'
+						},
+						{
+							id:2,
+							text:'1:2.8'
+						},
+						{
+							id:3,
+							text:'1:2.7'
+						},
+					],
+					tz:[
+						{
+							id:0,
+							text:'1:2'
+						},
+						{
+							id:1,
+							text:'1:1.9'
+						},
+						{
+							id:2,
+							text:'1:1.8'
+						}
+					],
+					jc:[
+						{
+							id:0,
+							text:'1:1'
+						},
+						{
+							id:1,
+							text:'1:0.9'
+						},
+						{
+							id:2,
+							text:'1:0.98'
+						},
+						{
+							id:3,
+							text:'1:0.95'
+						},
+					],
 				},
 				lists:[
 					{
@@ -188,6 +341,8 @@
 					margin-left: 10px;
 					width: 35px;
 					height: 35px;
+					position: relative;
+					top: 1px;
 				}
 			}
 		}
@@ -203,7 +358,7 @@
 			padding: 0 8%;
 			
 			flex-wrap: wrap;
-			li{
+			&>li{
 				
 				margin-bottom: 15px;
 				width: 46%;
@@ -213,7 +368,7 @@
 					width: 100%;
 				}
 			}
-			li:nth-child(2n){
+			&>li:nth-child(2n){
 				margin-left: 8%;
 			}
 			
@@ -245,6 +400,64 @@
 			}
 		}
 		
+		.bx{
+			position: fixed;
+			z-index: 1000;
+			right: 10px;
+			bottom: 100px;
+			img{
+				width: 70px;
+			}
+		}
+	
+		.fonter{
+			position: fixed;
+			bottom: 0px;
+			left: 5%;
+			width: 90%;
+			z-index: 100;
+			display: flex;
+			padding: 10px 0;
+			background: rgba(67, 89, 166,0.6);
+			span{
+				flex: 1;
+				text-align: center;
+			}
+			img{
+				display: inline-block;
+				width: 80px;
+			}
+		}
+		
+		.a_changel{
+			padding: 20px;
+			.top{
+				text-align: center;
+				padding-bottom: 8px;
+				border-bottom: 1px solid @blue1;
+				margin-bottom: 5px;
+			}
+			.list{
+				padding: 5px;
+				background-color: @blue1;
+				li{
+					margin-bottom: 10px;
+					&>span{
+						float: left;
+						width: 50px;
+						text-align: center;
+					}
+					&>div{
+						float: left;
+						width: calc(100% - 50px);
+					}
+				}
+			}
+			.ls{
+				background-color: @blue2;
+			}
+		}
+		
 	}
 
 	
@@ -257,6 +470,11 @@
 			padding: 0;
 			height: 15px;
 			line-height: 100%;
+		}
+		.g_diglog{
+			.main{
+				top: 10%;
+			}
 		}
 	}
 	

@@ -17,8 +17,11 @@ export default {
 </script>
 
 <style lang="less">
+	
   .clicked{
     position: relative;
+	animation: sc linear 0.3s 1;
+	transition: all 0.3s;
     &::after{
       position: absolute;
       top: 50%;
@@ -34,7 +37,22 @@ export default {
     }
   }
   .clicked-img{
+	display: inline-block;
     opacity: 0.7;
+	transform: scale(1.05);
+	transition: all 0.3s;
+  }
+  
+  @keyframes sc{
+  	 0%{
+  		transform: scale(1); 
+  	 }
+  	 50%{
+  		 transform: scale(1.1);
+  	 }
+  	 100%{
+  	 		 transform: scale(1);
+  	 }
   }
 
 

@@ -2,8 +2,9 @@ import Vue from 'vue'
 
 import upLoadDownRefresh from '_c/upLoadDownRefresh'
 import dialogx from '_c/dialogx'
+import radio from '_c/radio'
 
-const components = [upLoadDownRefresh,dialogx]
+const components = [upLoadDownRefresh,dialogx,radio]
 components.forEach(item=>{
     Vue.component(item.name,item)
 })
@@ -14,6 +15,8 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 
 Vue.use(Vant);
+
+import '_a/less/class.less';
 
 
 function addClass(obj, cls){
