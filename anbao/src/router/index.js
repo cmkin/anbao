@@ -2,8 +2,13 @@ import Vue from 'vue'
 import vueRouter from 'vue-router'
 Vue.use(vueRouter)
 
-const routes = [{
-	path: '',
+const routes = [
+	{
+		path: '',
+		redirect: '/play'
+	},
+	{
+	path: '/index',
 	component: () => import('_v/index/index'),
 	meta: {
 		title: "首页",
@@ -19,6 +24,13 @@ const routes = [{
 			
 		}, */
 	]
+},{
+	path: '/play',
+	component: () => import('_v/play/index'),
+	meta: {
+		title: "",
+		noCheak: true
+	},
 }]
 
 

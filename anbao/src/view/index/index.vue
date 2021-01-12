@@ -72,54 +72,78 @@
 		<diglogx v-model="flag.lb">
 			<template v-slot:content>
 				<div class="a_changel">
+					<div class="m_W">
 					<div class="top">
 						<van-button type="info" v-clicked>固定庄家</van-button>
 					</div>
-					<ul class="list">
-						<li class="clearfix">
-							<span>
-								筹码
-							</span>
-							<div>
-								<radiox :lists="radioL.cm" v-model="flag.cm"></radiox>
-							</div>
-						</li>
-						<li class="clearfix">
-							<span>上限</span>
-							<div>
-								<radiox :lists="radioL.sx" v-model="flag.sx"></radiox>
-							</div>
-						</li>
-						<li class="clearfix">
-							<span>
-								座位分
-							</span>
-							<div>
-								<radiox :lists="radioL.zwf" v-model="flag.zwf"></radiox>
-							</div>
-						</li>
-					</ul>
-					<ul class="list ls">
-						<li style="font-size: 16px;">赔率设置</li>
-						<li class="clearfix">
-							<span>龙,虎,</br>出,入</span>
-							<div>
-								<radiox :lists="radioL.lh" v-model="flag.lh"></radiox>
-							</div>
-						</li>
-						<li class="clearfix">
-							<span>同,粘</span>
-							<div>
-								<radiox :lists="radioL.tz" v-model="flag.tz"></radiox>
-							</div>
-						</li>
-						<li class="clearfix">
-							<span>角,串</span>
-							<div>
-								<radiox :lists="radioL.jc" v-model="flag.jc"></radiox>
-							</div>
-						</li>
-					</ul>
+					<div class="list_wrap">
+						<ul class="list">
+							<li class="clearfix">
+								<span>
+									筹码
+								</span>
+								<div>
+									<radiox :lists="radioL.cm" v-model="flag.cm"></radiox>
+								</div>
+							</li>
+							<li class="clearfix">
+								<span>上限</span>
+								<div>
+									<radiox :lists="radioL.sx" v-model="flag.sx"></radiox>
+								</div>
+							</li>
+							<li class="clearfix">
+								<span>
+									座位分
+								</span>
+								<div>
+									<radiox :lists="radioL.zwf" v-model="flag.zwf"></radiox>
+								</div>
+							</li>
+						</ul>
+						<ul class="list ls">
+							<li style="font-size: 15px;margin-bottom:5px;">赔率设置</li>
+							<li class="clearfix">
+								<span>龙,虎,</br>出,入</span>
+								<div>
+									<radiox :lists="radioL.lh" v-model="flag.lh"></radiox>
+								</div>
+							</li>
+							<li class="clearfix">
+								<span>同,粘</span>
+								<div>
+									<radiox :lists="radioL.tz" v-model="flag.tz"></radiox>
+								</div>
+							</li>
+							<li class="clearfix">
+								<span>角,串</span>
+								<div>
+									<radiox :lists="radioL.jc" v-model="flag.jc"></radiox>
+								</div>
+							</li>
+						</ul>
+						<ul class="list">
+							<li class="clearfix">
+								<span>人数</span>
+								<div>
+									<radiox :lists="radioL.rs" v-model="flag.rs"></radiox>
+								</div>
+							</li>
+							<li class="clearfix">
+								<span>房卡</span>
+								<div>
+									<radiox :lists="radioL.fk" v-model="flag.fk"></radiox>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="nos">
+						创建房间游戏未进行，不消耗房卡
+					</div>
+					</div>
+					<div class="btn">
+						<img v-clicked src="../../assets/img/others/19.png" alt="">
+					</div>
 				</div>
 			</template>
 		</diglogx>
@@ -139,7 +163,9 @@
 					zwf:0,
 					lh:0,
 					tz:0,
-					jc:0
+					jc:0,
+					rs:0,
+					fk:0
 				},
 				radioL:{
 					cm:[
@@ -220,6 +246,46 @@
 						{
 							id:3,
 							text:'1:0.95'
+						},
+					],
+					rs:[
+						{
+							id:0,
+							text:'10'
+						},
+						{
+							id:1,
+							text:'13'
+						},
+						{
+							id:2,
+							text:'16'
+						},
+						{
+							id:3,
+							text:'18'
+						},
+						{
+							id:4,
+							text:'20'
+						},
+						{
+							id:5,
+							text:'26'
+						},
+						{
+							id:6,
+							text:'32'
+						},
+						{
+							id:7,
+							text:'<span style="color:red;">38</span>'
+						},
+					],
+					fk:[
+						{
+							id:0,
+							text:'<span style="font-size:12px;">20人以下x5张房卡，26人以上x10张房卡</span>'
 						},
 					],
 				},
@@ -430,18 +496,26 @@
 		}
 		
 		.a_changel{
-			padding: 20px;
+			padding:5px;
+			width: 100%;
+			box-sizing: border-box;
+			.m_W{
+				padding: 20px;
+				padding-top: 10px;
+			}
 			.top{
 				text-align: center;
 				padding-bottom: 8px;
 				border-bottom: 1px solid @blue1;
 				margin-bottom: 5px;
 			}
-			.list{
-				padding: 5px;
+			.list_wrap{
 				background-color: @blue1;
+			}
+			.list{
+				padding:5px 10px;
 				li{
-					margin-bottom: 10px;
+				
 					&>span{
 						float: left;
 						width: 50px;
@@ -455,6 +529,23 @@
 			}
 			.ls{
 				background-color: @blue2;
+				margin: 5px;
+				margin-top: 0;
+				border-radius: 5px;
+			}
+			.nos{
+				text-align: center;
+				color: @blue;
+				padding: 5px 0;
+			}
+			.btn{
+				background-color: @blue1;
+				text-align: center;
+				padding: 10px 0;
+				img{
+					display: inline-block;
+					width: 100px;
+				}
 			}
 		}
 		
@@ -474,6 +565,7 @@
 		.g_diglog{
 			.main{
 				top: 10%;
+				background-size: 100% 110%;
 			}
 		}
 	}

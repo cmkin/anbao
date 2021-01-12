@@ -40,14 +40,13 @@
 			width: 100%;
 			li{
 				float: left;
-				padding-left: 5px;
-				margin-right: 10px;
-				margin-bottom: 5px;
+				padding-right: 10px;
+				margin-bottom: 0px;
 				span{
 					float: left;
 					img{
 						display: inline-block;
-						width: 22px;
+						width: 20px;
 					}
 					img:last-child{
 						display: none;
@@ -57,7 +56,7 @@
 					float: left;
 					margin-left: 5px;
 					padding-top: 1px;
-					font-size: 15px;
+					font-size: 14px;
 				}
 			}
 			.active{
