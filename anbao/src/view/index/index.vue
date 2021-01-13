@@ -142,7 +142,7 @@
 					</div>
 					</div>
 					<div class="btn">
-						<img v-clicked src="../../assets/img/others/19.png" alt="">
+						<img  @click="goplay" v-clicked src="../../assets/img/others/19.png" alt="">
 					</div>
 				</div>
 			</template>
@@ -157,7 +157,7 @@
 		data(){
 			return{
 				flag:{
-					lb:true,
+					lb:false,
 					cm:0,
 					sx:0,
 					zwf:0,
@@ -333,7 +333,10 @@
 			
 		},
 		methods:{
-			
+			goplay(){
+				this.flag.lb = false
+				this.$router.push("/play")
+			}
 		}
 	}
 </script>
@@ -479,8 +482,8 @@
 		.fonter{
 			position: fixed;
 			bottom: 0px;
-			left: 5%;
-			width: 90%;
+			left: 0%;
+			width: 100%;
 			z-index: 100;
 			display: flex;
 			padding: 10px 0;

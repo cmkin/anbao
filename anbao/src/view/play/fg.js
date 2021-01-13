@@ -1,6 +1,7 @@
 export const fgList = [
 	{
 		id:0,
+		background:"247, 190, 183",
 		position:[
 			[10,10],
 			[10,110],
@@ -10,6 +11,7 @@ export const fgList = [
 	},
 	{
 		id:1,
+		background:"247, 190, 183",
 		position:[
 			[10,111],
 			[10,176],
@@ -19,6 +21,7 @@ export const fgList = [
 	},
 	{
 		id:2,
+		background:"247, 190, 183",
 		position:[
 			[42,111],
 			[42,176],
@@ -28,6 +31,7 @@ export const fgList = [
 	},
 	{
 		id:3,
+		background:"247, 190, 183",
 		position:[
 			[10,177],
 			[10,280],
