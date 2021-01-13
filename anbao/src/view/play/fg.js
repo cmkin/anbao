@@ -1,4 +1,4 @@
-export default [
+export const fgList = [
 	{
 		id:0,
 		position:[
@@ -194,6 +194,16 @@ export default [
 			[180,160],
 			[180,176],
 			[110,176]
+		]
+	}
+]
+
+export const qyList = [
+	{
+		id:0,
+		position:[
+			[10,10],
+			
 		]
 	}
 ]

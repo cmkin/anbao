@@ -38,7 +38,7 @@
 
 <script>
 	import {dramImg} from './uitl'
-	import fgList from './fg'
+	import {fgList,qyList} from './fg'
 	export default {
 		data(){
 			return{
@@ -78,9 +78,10 @@
 				dramImg(require("../../assets/img/others/2.png"),(res)=>{
 					ctx.drawImage(res,0,0,width,width);
 					this.fglist(width)
+					this.qyList(0)
 					dramImg(require("../../assets/img/others/6.png"),(res2)=>{
 						ctx.drawImage(res2,width*0.25,width*0.25,width*0.5,width*0.5);
-						dramImg(require("../../assets/img/others/8.png"),(res3)=>{
+						dramImg(require("../../assets/img/others/23.png"),(res3)=>{
 							ctx.drawImage(res3,width*0.38,width*0.38,width*0.25,width*0.25);
 						})
 					})
@@ -91,9 +92,7 @@
 					
 			},
 			fglist(w){
-				console.log(w)
-				console.log(fgList)
-							
+				
 				let paths = []	
 				this.ctx.beginPath()
 				fgList.forEach(item=>{
@@ -105,8 +104,8 @@
 							path,
 							id:item.id
 						})
-						this.ctx.strokeStyle="#fff"
-						this.ctx.fillStyle="#000000"
+						this.ctx.strokeStyle="transparent"
+						this.ctx.fillStyle="transparent"
 						this.ctx.fill(path)
 						this.ctx.stroke(path)
 						this.ctx.closePath()
@@ -152,6 +151,26 @@
 					aimg.style.top = e.clientY +'px'
 					aimg.style.left = e.clientX +'px'
 				console.log(e)
+			},
+			qyList(id){
+				let paths = []
+				let w = document.querySelector("#can").offsetWidth
+				this.ctx.beginPath()
+				qyList.filter(item=>item.id==id).forEach(item=>{
+						let path = new Path2D();
+						item.position.forEach((tt,ti)=>{
+							path.lineTo(tt[0]/290*w,tt[1]/290*w);
+						}) 
+						paths.push({
+							path,
+							id:item.id
+						})
+						this.ctx.strokeStyle="#fff"
+						this.ctx.fillStyle="red"
+						this.ctx.fill(path)
+						this.ctx.stroke(path)
+						this.ctx.closePath()
+				})
 			}
 		}
 	}
