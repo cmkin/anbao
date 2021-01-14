@@ -10,7 +10,8 @@ components.forEach(item=>{
 })
 
 
-
+import $ from 'jquery'
+window.$=$
 import Vant from 'vant';
 import 'vant/lib/index.css';
 

@@ -11,22 +11,13 @@
 				<span></span>
 			</div>
 			<div class="play">
-				<!-- <div class="pan">
-					<img src="../../assets/img/others/2.png" alt="">
-					<img src="../../assets/img/others/6.png" alt="">
-					<img src="../../assets/img/others/8.png" alt="">
-				</div>
-				<div class="zw" v-if="false">
-					<div class="top">
-						<img src="../../assets/img/others/8.png" alt="">
-					</div>
-				</div> -->
 				<div class="z">
 					<img src="../../assets/img/others/12.png" alt="">
 					<span>30</span>
 				</div>
 				<div class="can" id="can">
-					<canvas id="game" style=""></canvas>
+					<canvas id="game"></canvas>
+					<canvas id="zgame" style="display: none;"></canvas>
 				</div>
 				
 				
@@ -83,14 +74,15 @@
 			</span>
 		</div>
 		
-		<img :src="cmList[cmActive]" alt=""  class="animate">
+		
+		<img v-if="resFlag" :src="resList[resActive]" alt="" class="res_animate">
 		
 	</div>
 </template>
 
 <script>
 	import {dramImg} from './uitl'
-	import {fgList,qyList} from './fg'
+	import {fgList,qyList,fourBlock} from './fg'
 	export default {
 		data(){
 			return{
@@ -117,14 +109,26 @@
 					require("_a/img/18.png"),
 					require("_a/img/others/40.png"),
 				],
+				resList:[
+					require("_a/img/others/h.png"),
+					require("_a/img/others/x.png"),
+					require("_a/img/others/zc.png")
+				],
+				resActive:0,
+				resFlag:false,
 				cmposition:{
 					top:"70%",
 					left:"20%"
 				},
 				cmActive:0,
+				//wj
 				ctx:null,
 				fgOpacty:0.1,
-				paths:[]
+				paths:[],
+				//zj
+				zCtx:null,
+				zpaths:[],
+				
 			}
 		},
 		
@@ -141,9 +145,13 @@
 		
 		mounted() {
 			this.init()
-			
+			this.zinit(this.fourBlock)
+			setTimeout(()=>{
+				this.resFlag = true
+			},2000)
 		},
 		methods:{
+			//玩家
 			init(){
 				
 				let canvas = document.getElementById("game")
@@ -185,8 +193,8 @@
 							let x =  e.layerX-13//-bbox.left
 							let y =  e.layerY-13//-bbox.top
 							 if(this.ctx.isPointInPath(item.path,x,y)){
-								 console.log(item.id)
-								 console.log(e)
+								 //console.log(item.id)
+								 //console.log(e)
 								 
 								 let aimg = new Image() //document.querySelector(".animate")
 								 let id  = "id"+index
@@ -196,6 +204,7 @@
 									 aimg.style.top = this.cmposition.top
 									 aimg.style.left = this.cmposition.left
 									 document.querySelector(".view_play").appendChild(aimg)
+									
 									 aimg.onload=()=>{
 										 aimg.style.opacity = 1
 										 aimg.style.transition = "all 0.5s"
@@ -203,8 +212,9 @@
 										 aimg.style.left = e.clientX-13+"px"
 										 
 										 setTimeout(()=>{
-										 	document.querySelectorAll(".view_play .animate").forEach(tt=>{
-												tt.remove()
+											 let allimg = document.querySelectorAll(".view_play .animate")
+										 	allimg.forEach((tt,ti)=>{
+													tt.remove()
 											})
 										 	 dramImg(this.cmList[this.cmActive],(res)=>{
 										 	 	this.ctx.drawImage(res,x,y,25,25);
@@ -232,21 +242,14 @@
 							path,
 							id:item.id
 						})
-						this.ctx.strokeStyle=item.background?`rgba(${item.background},${this.fgOpacty})`:"transparent"
-						this.ctx.fillStyle=item.background?`rgba(${item.background},${this.fgOpacty})`:"transparent"
+						this.ctx.strokeStyle="transparent"
+						this.ctx.fillStyle="transparent"
 						this.ctx.fill(path)
 						this.ctx.stroke(path)
 						this.ctx.closePath()
 				})
 				this.paths = paths
-				if(this.fgOpacty<0.4){
-					setTimeout(()=>{
-						this.fgOpacty = this.fgOpacty+0.1
-						this.fgtc(w)
-					},1000)
-				}else{
-					
-				}
+				
 				
 			},
 			
@@ -263,10 +266,9 @@
 							}
 							
 							dramImg(require("../../assets/img/others/23.png"),(res3)=>{
+								this.ctx.clearRect(width*left,width*0.385,width*0.24,width*0.24);
 								this.ctx.drawImage(res3,width*0.38,width*0.38,width*0.25,width*0.25);
-								this.ctx.clearRect(width*left,width*0.38,width*0.25,width*0.25);
 								left +=0.003
-								
 								this.ctx.drawImage(img,width*left,width*0.38,width*0.25,width*0.25);
 									
 								
@@ -284,10 +286,7 @@
 					top:e.clientY+'px',
 					left:e.clientX+'px'
 				}
-				let aimg = document.querySelector(".animate")
-					aimg.style.opacity = 0
-					aimg.style.top = e.clientY +'px'
-					aimg.style.left = e.clientX +'px'
+				
 				console.log(e)
 			},
 			qyList(id){
@@ -323,7 +322,74 @@
 						}
 					break;
 				}
+			},
+			
+			
+			//zj
+			zinit(callback){
+				let canvas = document.getElementById("zgame")
+				let width = document.querySelector("#can").offsetWidth
+					canvas.width = width
+					canvas.height = width
+				let ctx=canvas.getContext("2d");
+				this.zCtx=ctx
+				
+							
+				dramImg(require("../../assets/img/others/j.png"),(res)=>{
+					ctx.drawImage(res,0,0,width,width);
+					dramImg(require("../../assets/img/others/23.png"),(res3)=>{
+						ctx.drawImage(res3,width*0.4,width*0.4,width*0.2,width*0.2);
+						 callback?callback():''
+					})
+				})
+			},
+			//四个区域
+			fourBlock(){
+				let w = document.querySelector("#can").offsetWidth
+				let paths = []
+				this.zCtx.beginPath()
+				fourBlock.forEach(item=>{
+						let path = new Path2D();
+						item.position.forEach((tt,ti)=>{
+							path.lineTo(tt[0]/290*w,tt[1]/290*w);
+						}) 
+						paths.push({
+							path,
+							id:item.id
+						})
+						this.zCtx.strokeStyle="transparent"
+						this.zCtx.fillStyle="transparent"
+						this.zCtx.fill(path)
+						this.zCtx.stroke(path)
+						this.zCtx.closePath()
+				})
+				this.zpaths = paths
+				
+				
+				document.getElementById("zgame").addEventListener('click',  (e) =>{
+					var bbox = document.getElementById("zgame").getBoundingClientRect();
+						this.zpaths.forEach((item,index)=>{
+							let x =  e.layerX-13//-bbox.left
+							let y =  e.layerY-13//-bbox.top
+							
+							this.zCtx.globalCompositeOperation ='destination-out';
+							this.zCtx.fillStyle="transparent"
+							this.zCtx.fill(item.path) 
+							
+							 if(this.ctx.isPointInPath(item.path,x,y)){
+								//填充
+								
+								console.log(item.id)
+								return
+								this.zCtx.fillStyle="rgba(0,0,0,0.5)"
+								this.zCtx.fill(item.path)
+							 }
+						})	
+				})
+				
+				
 			}
+		
 		}
 	}
 </script>
@@ -405,16 +471,14 @@
 					width: 70%;
 					margin: auto;
 					position: relative;
-					canvas{
-						display: block;
-					}
+					
 				}
 			}
 			.res_list{
 				width: 50%;
 				left: 25%;
 				margin: auto;
-				position: fixed;
+				position: absolute;
 				bottom: 14%;
 				div{
 					background-color: rgba(0,0,0,0.5);
@@ -433,7 +497,7 @@
 				width: 60%;
 				left: 20%;
 				margin: auto;
-				position: fixed;
+				position: absolute;
 				bottom: 14%;
 				.btns{
 					position: absolute;
@@ -567,5 +631,34 @@
 		transition: all 0.5s;
 		width:25px;
 	}
-	
+	.res_animate{
+		position: fixed;
+		bottom: 30%;
+		width: 50%;
+		left: 25%;
+		z-index: 100;
+		animation: resAni 2s linear 1;
+	}
+	@keyframes resAni{
+		0%{
+			opacity:0;
+			transform: scale(1);
+		}
+		30%{
+			opacity:0.3;
+			transform: scale(1.03);
+		}
+		50%{
+			opacity:0.5;
+			transform: scale(1.05);
+		}
+		80%{
+			opacity:0.8;
+			transform: scale(1.08);
+		}
+		100%{
+			opacity:1;
+			transform: scale(1);
+		}
+	}
 </style>
