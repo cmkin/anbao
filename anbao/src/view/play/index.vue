@@ -15,9 +15,10 @@
 					<img src="../../assets/img/others/12.png" alt="">
 					<span>30</span>
 				</div>
+				
 				<div class="can" id="can">
-					<canvas id="game"></canvas>
-					<canvas id="zgame" style="display: none;"></canvas>
+					<canvas id="game" v-show="playflag"></canvas>
+					<canvas id="zgame" v-show="!playflag"></canvas>
 				</div>
 				
 				
@@ -37,7 +38,7 @@
 			<div class="cm_list">
 				<div class="btns">
 					<span>0</span>
-					<span>停止下注</span>
+					<span @click="playflag = !playflag">停止下注</span>
 				</div>
 				<span v-for="item,index in cmList">
 					<img @click="changeCm($event,index)" v-clicked :class="cmActive==index?'active':''" :src="item" alt="">
@@ -45,13 +46,13 @@
 			</div>
 			
 			
-			<div class="zw_left">
-				<span :style="{height:getwh(12,0)}" v-for="item in 12">
+			<div class="zw_left clearfix">
+				<span :style="{height:getwh(12,0)}" v-for="item in 24">
 					<img src="../../assets/img/others/3.png" alt="" >
 				</span>
 			</div>
-			<div class="zw_left zw_right">
-				<span :style="{height:getwh(12,0)}" v-for="item in 12">
+			<div class="zw_left zw_right clearfix">
+				<span :style="{height:getwh(12,0)}" v-for="item in 24">
 					<img src="../../assets/img/others/3.png" alt="" >
 				</span>
 			</div>
@@ -86,6 +87,7 @@
 	export default {
 		data(){
 			return{
+				playflag:true,
 				bgActive:0,
 				bgList:[
 					require("_a/img/others/00.png"),
@@ -147,7 +149,7 @@
 			this.init()
 			this.zinit(this.fourBlock)
 			setTimeout(()=>{
-				this.resFlag = true
+				//this.resFlag = true
 			},2000)
 		},
 		methods:{
@@ -166,6 +168,7 @@
 					ctx.drawImage(res,0,0,width,width);
 					this.fglist(width)
 					this.qyList(0)
+					
 					dramImg(require("../../assets/img/others/6.png"),(res2)=>{
 						ctx.drawImage(res2,width*0.25,width*0.25,width*0.5,width*0.5);
 						dramImg(require("../../assets/img/others/8.png"),(res3)=>{
@@ -189,12 +192,48 @@
 
 				document.getElementById("game").addEventListener('click',  (e) =>{
 					var bbox = document.getElementById("game").getBoundingClientRect();
+						
 						this.paths.forEach((item,index)=>{
-							let x =  e.layerX-13//-bbox.left
-							let y =  e.layerY-13//-bbox.top
+							let x =  e.layerX//-bbox.left
+							let y =  e.layerY//-bbox.top
+								
+								
 							 if(this.ctx.isPointInPath(item.path,x,y)){
 								 //console.log(item.id)
 								 //console.log(e)
+								 //console.log(x)
+								 
+								 var getbl = (value)=>{
+									 return value/290*w
+								 }
+								 if(item.id<16){
+									 if(x<getbl(item.imgPosition.x.min)){
+									 	x =getbl(item.imgPosition.x.min) 
+									 }
+									 if(x>getbl(item.imgPosition.x.max)){
+									 	x = getbl(item.imgPosition.x.max)
+									 }
+									 if(y<getbl(item.imgPosition.y.min)){
+									 	y =getbl(item.imgPosition.y.min) 
+									 }
+									 if(y>getbl(item.imgPosition.y.max)){
+									 	y = getbl(item.imgPosition.y.max)
+									 }
+								 }else{
+									 console.log(y,item.id)
+									let obj = item.imgPosition.filter(item=>{
+										return y>=item.y[0] &&  y<=item.y[1]
+									})[0]
+									console.log(obj)
+									y = obj.y[0]+5
+									
+									if(x<getbl(obj.x[0])){
+										x = getbl(obj.x[0])
+									}
+									if(x>getbl(obj.x[1])){
+										x = getbl(obj.x[1])
+									}	
+								 }
 								 
 								 let aimg = new Image() //document.querySelector(".animate")
 								 let id  = "id"+index
@@ -208,8 +247,8 @@
 									 aimg.onload=()=>{
 										 aimg.style.opacity = 1
 										 aimg.style.transition = "all 0.5s"
-										 aimg.style.top = e.clientY-13+"px"
-										 aimg.style.left = e.clientX-13+"px"
+										 aimg.style.top = e.clientY+"px"
+										 aimg.style.left = e.clientX+"px"
 										 
 										 setTimeout(()=>{
 											 let allimg = document.querySelectorAll(".view_play .animate")
@@ -217,7 +256,7 @@
 													tt.remove()
 											})
 										 	 dramImg(this.cmList[this.cmActive],(res)=>{
-										 	 	this.ctx.drawImage(res,x,y,25,25);
+										 	 	this.ctx.drawImage(res,x,y,getbl(25),getbl(25));
 										 	 })
 										  },500)
 									 }
@@ -240,7 +279,8 @@
 						}) 
 						paths.push({
 							path,
-							id:item.id
+							id:item.id,
+							imgPosition:item.imgPosition
 						})
 						this.ctx.strokeStyle="transparent"
 						this.ctx.fillStyle="transparent"
@@ -255,6 +295,7 @@
 			
 			//中间的动画
 			centerOpen(){
+			
 				let width = document.querySelector("#can").offsetWidth
 				let left = 0.38
 				let img = new Image()
@@ -369,8 +410,8 @@
 				document.getElementById("zgame").addEventListener('click',  (e) =>{
 					var bbox = document.getElementById("zgame").getBoundingClientRect();
 						this.zpaths.forEach((item,index)=>{
-							let x =  e.layerX-13//-bbox.left
-							let y =  e.layerY-13//-bbox.top
+							let x =  e.layerX//-bbox.left
+							let y =  e.layerY//-bbox.top
 							
 							this.zCtx.globalCompositeOperation ='destination-out';
 							this.zCtx.fillStyle="transparent"
@@ -548,24 +589,27 @@
 				position: absolute;
 				width: 15%;
 				height: 85%;
-				top: 30px;
+				top: 45px;
 				left: 0;
 				padding-left: 3px;
 				box-sizing: border-box;
 				&>span{
 					display: block;
-					width: 70%;
-					margin: auto;
+					width: 40%;
+					float: left;
 					img{
 						display: block;
 						width: 100%;
-						height: 45px;
+						height: 35px;
 					}
+				}
+				&>span:nth-child(2n){
+					margin-left: 20%;
 				}
 			}
 			.zw_right{
 				left: auto;
-				right: 0;
+				right: 2px;
 			}
 			.zw_top{
 				position: absolute;
