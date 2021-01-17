@@ -12,7 +12,7 @@
 						</li>
 					</ul>
 					<div class="os" v-if="checked">
-						<span v-clicked v-for="item in oslist">
+						<span @click="osClick(item)" v-clicked v-for="item in oslist">
 							<img :src="item.img" alt="">
 							<i v-html="item.text"></i>
 						</span>
@@ -22,7 +22,7 @@
 		</diglogx>
 		
 		
-		<diglogx v-model="fks" class="bgs">
+		<diglogx v-model="fks" >
 			<template v-slot:content>
 				<div class="fks">
 					<ul>
@@ -49,7 +49,7 @@
 		</diglogx>
 		
 		
-		<diglogx v-model="sendFk" class="bgs">
+		<diglogx v-model="sendFk" >
 			<template v-slot:content>
 				<div class="fks">
 					<ul>
@@ -79,7 +79,71 @@
 			</template>
 		</diglogx>
 		
+		<diglogx v-model="sfjl" >
+			<template v-slot:content>
+				<div class="sfjl">
+					<div class="btns">
+						<van-button type="info">发送</van-button>
+						<van-button type="info">收到</van-button>
+						<van-button type="info">赠送</van-button>
+					</div>
+					<ul>
+						<li v-for="item in 5">
+							<div>
+								<i>房卡包</i>
+								<i>10张</i>
+							</div>
+							<div>
+								<i>2021-01-17 14;26:22</i>
+								<i :class="item == 2 ?'n':''">已领取</i>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</template>
+		</diglogx>
 		
+		
+		<diglogx v-model="smrz" >
+			<template v-slot:content>
+				<div class="smrz">
+					<p>建议您填写防沉迷信息，以便获取更好的网络服务，填写后无法更改，请确认信息正确</p>
+					<ul>
+						<li>
+							<span>姓名</span>
+							<input type="text" placeholder="请输入姓名">
+						</li>
+						<li>
+							<span>身份证</span>
+							<input type="text" placeholder="请输入身份证号码">
+						</li>
+					</ul>
+					<div class="btns">
+						<span v-clicked>发送房卡</span>
+					</div>
+				</div>
+			</template>
+		</diglogx>
+		
+		
+		<diglogx v-model="pjjl" >
+			<template v-slot:content>
+				<div class="pjjl">
+					<div class="btns">
+						<van-button type="info">我对局的游戏</van-button>
+						<van-button type="info">我创建的游戏</van-button>
+					</div>
+					<div class="lists">
+						<ul class="clearfix" :style="{width:35*10+'vw'}">
+							<li v-clicked @click="pactive=item" :class="item==pactive?'active':''" v-for="item in 10">
+								<img src="../../assets/img/1.png" alt="">
+							</li>
+						</ul>
+					</div>
+				
+				</div>
+			</template>
+		</diglogx>
 		
 	</div>
 </template>
@@ -91,7 +155,11 @@
 				show:true,
 				checked:true,
 				fks:false,
-				sendFk:true,
+				sendFk:false,
+				sfjl:false,
+				smrz:false,
+				pjjl:false,
+				pactive:1,
 				lists:[
 					{
 						img:require("_a/img/gr/5.png"),
@@ -156,6 +224,22 @@
 					break;
 					case 2:
 						this.sendFk = true
+					break;
+					case 3:
+						this.sfjl = true
+					break;
+					case 4:
+						this.smrz = true
+					break;
+					case 5:
+						this.pjjl = true
+					break;
+				}
+			},
+			osClick(item){
+				switch(item.id){
+					case 0:
+						this.$router.push('/invitation')
 					break;
 				}
 			}
@@ -281,6 +365,139 @@
 			
 		}
 		
+		.sfjl{
+			.btns{
+				
+				border-radius: 20px;
+				overflow: hidden;
+				margin: 10px 30px;
+				display: flex;
+				button{
+					flex: 1;
+				}
+				button:nth-child(2){
+					margin: 0 5px;
+				}
+			}
+			
+			ul{
+				border-top: 1px solid #99AFF1;
+				padding: 10px 0;
+				li{
+					background-color: #DFE7FF;
+					border-radius: 10px;
+					padding: 10px;
+					margin: 0 20px;
+					margin-bottom: 10px;
+					div{
+						margin-bottom: 5px;
+						font-size: 16px;
+						i:last-child{
+							float: right;
+						}
+						.n{
+							color: #ECA69A;
+						}
+					}
+				}
+			}
+		}
+		
+		.smrz{
+			padding-bottom: 5px;
+			&>p{
+				padding: 20px;
+				font-size: 22px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #B8C5FA;
+			}
+			ul{
+				padding: 20px 0;
+				padding: 20px;
+				li{
+					margin-bottom: 10px;
+					span{
+						display: block;
+						padding-left: 30px;
+						font-size: 22px;
+						padding-bottom: 10px;
+					}
+					input{
+						display: block;
+						width: 100%;
+						padding: 10px;
+						background-color: #DFE7FF;
+						border-radius: 20px;
+						box-sizing: border-box;
+						border: none;
+						font-size: 20px;
+					}
+				}
+			}
+			
+			.btns{
+				background-color: #C7D4FE;
+				width: 97%;
+				padding: 10px 0;
+				margin: auto;
+				&>span{
+					text-align: center;
+					line-height: 55px;
+					display: block;
+					width: 160px;
+					font-size: 18px;
+					height: 60px;
+					color: #fff;
+					background: url(../../assets/img/gr/btn.png) no-repeat 0 0;
+					background-size: 100% 100%;
+					margin: auto;
+				}
+			}
+		}
+		
+		.pjjl{
+			overflow: hidden;
+			padding-bottom: 30px;
+			.btns{
+				
+				border-radius: 20px;
+				overflow: hidden;
+				margin: 10px 30px;
+				display: flex;
+				button{
+					flex: 1;
+				}
+				button:nth-child(2){
+					margin-left: 5px;
+				}
+			}
+			.lists{
+				width: 92%;
+				overflow-x: auto;
+				padding: 20px 0;
+				margin: 0 20px;
+				box-sizing: border-box;
+				border-top: 1px solid #9099F8;
+				border-bottom: 1px solid #9099F8;
+				ul{
+					li{
+						float: left;
+						width: 30vw;
+						border-radius: 20px;
+						border: 5px solid transparent;
+						box-sizing: border-box;
+						margin-right: 5vw;
+						img{
+							display: block;
+							width: 100%;
+						}
+					}
+					.active{
+						border-color: #9099F8;
+					}
+				}
+			}
+		}
 	}
 </style>
 <style lang="less">
