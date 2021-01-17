@@ -14,3 +14,4 @@ export function dramImg (url , callback) {
 export function getwh (value){
 		
 }
+

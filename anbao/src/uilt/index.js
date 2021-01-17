@@ -27,6 +27,35 @@ Vue.prototype.$copy=Clipboard
 import '_a/less/class.less';
 
 
+
+//Canvas清除扩展
+CanvasRenderingContext2D.prototype.clear = function() {
+    this.save();
+    this.globalCompositeOperation = 'destination-out';
+    this.fillStyle = 'black';
+	this.strokeStyle="black";
+    this.fill();
+	this.stroke();
+    this.restore();
+};
+
+CanvasRenderingContext2D.prototype.clearArc = function(x, y, radius, startAngle, endAngle, anticlockwise) {
+    this.beginPath();
+    this.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+    this.clear();
+};
+
+CanvasRenderingContext2D.prototype.clearShape = function(paths,w,x, y, radius, startAngle, endAngle, anticlockwise) {
+    this.beginPath();
+    // 定义各种不规则图形，如三角形、五角星...
+	
+	paths.forEach((tt,ti)=>{
+		this.lineTo(tt[0]/290*w,tt[1]/290*w);
+	}) 
+    this.clear();
+};
+
+
 function addClass(obj, cls){
     var obj_class = obj.className,//获取 class 内容.
     blank = (obj_class != '') ? ' ' : '';//判断获取到的 class 是否为空, 如果不为空在前面加个'空格'.
