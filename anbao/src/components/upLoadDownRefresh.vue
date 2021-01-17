@@ -50,6 +50,6 @@ export default {
     
   }
   .transition {
-    transition: all .7s; 
+    transition: all .5s; 
   }
 </style>

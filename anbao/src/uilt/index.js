@@ -3,8 +3,10 @@ import Vue from 'vue'
 import upLoadDownRefresh from '_c/upLoadDownRefresh'
 import dialogx from '_c/dialogx'
 import radio from '_c/radio'
+import keyborder from '_c/keyborder'
+import fdb from '_c/alert/fdb'
 
-const components = [upLoadDownRefresh,dialogx,radio]
+const components = [upLoadDownRefresh,dialogx,radio,fdb,keyborder]
 components.forEach(item=>{
     Vue.component(item.name,item)
 })
@@ -16,6 +18,11 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 
 Vue.use(Vant);
+
+import Clipboard from 'clipboard';  
+
+Vue.prototype.$copy=Clipboard
+
 
 import '_a/less/class.less';
 

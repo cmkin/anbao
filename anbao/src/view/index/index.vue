@@ -20,51 +20,63 @@
 				<img src="../../assets/img/index/20.png" alt="">
 				<span>0</span>
 			</div>
-			<div class="r">
-				<img v-clicked src="../../assets/img/index/18.png" alt="">
-				<img v-clicked src="../../assets/img/index/7.png" alt="">
+			<div class="r" v-if="pageType==0">
+				<img @click="grinfo=true" v-clicked src="../../assets/img/index/18.png" alt="">
+				<img @click="fks=true" v-clicked src="../../assets/img/index/7.png" alt="">
 			</div>
 		</div>
-		<scrolltop>
-		<div class="main_wrap">	
-			
-			<ul class="main clearfix">
-				
-					<li @click="flag.lb = true" v-clicked v-for="(item,index) in lists" :key="index">
-						<img :src="item.img" alt="">
-					</li>
-				
-			</ul>
 		
-		</div>
-		</scrolltop>
-		<div>
+		<div v-if="pageType==0">
 			
-		</div>
-
-
-		<div class="tips">
-			<img src="../../assets/img/16.png" alt="">
+			<scrolltop>
+			<div class="main_wrap">	
+				
+				<ul class="main clearfix">
+					
+						<li @click="flag.lb = true" v-clicked v-for="(item,index) in lists" :key="index">
+							<img :src="item.img" alt="">
+						</li>
+					
+				</ul>
+			
+			</div>
+			</scrolltop>
 			<div>
-				<van-notice-bar scrollable text="通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知" />
+				
 			</div>
+
+
+			<div class="tips">
+				<img src="../../assets/img/16.png" alt="">
+				<div>
+					<van-notice-bar scrollable text="通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知" />
+				</div>
+			</div>
+			
+			<div class="bx">
+				<img @click="keyborder = true" v-clicked  src="../../assets/img/index/36.png" alt="">
+			</div>
+			
 		</div>
 		
-		<div class="bx">
-			<img v-clicked  src="../../assets/img/index/36.png" alt="">
-		</div>
 		
+		<div v-if="pageType==1">
+			<zx></zx>
+		</div>
+		<div v-if="pageType==2">
+			<mine></mine>
+		</div>
 		
 		
 		<div class="fonter">
-			<span>
-				<img src="../../assets/img/11.png" alt="" >
+			<span @click="pageType=0">
+				<img v-clicked src="../../assets/img/11.png" alt="" >
 			</span>
-			<span>
-				<img src="../../assets/img/12.png" alt="" >
+			<span @click="pageType=1">
+				<img v-clicked src="../../assets/img/12.png" alt="" >
 			</span>
-			<span>
-				<img src="../../assets/img/10.png" alt="" >
+			<span @click="pageType=2">
+				<img v-clicked src="../../assets/img/10.png" alt="" >
 			</span>
 		</div>
 
@@ -147,15 +159,90 @@
 				</div>
 			</template>
 		</diglogx>
-
+		
+		
+		<fdb v-model="fdb"  class="bgs"></fdb>
+		
+		
+		<diglogx v-model="keyborder"  class="bgs">
+			<template v-slot:content>
+				<keyborder @ok=""></keyborder>
+			</template>
+		</diglogx>
+		
+		<diglogx v-model="grinfo" class="bgs">
+			<template v-slot:content>
+				<div class="grinfo">
+					<p class="z">
+						致广大玩家:
+						</br>
+					 <i style="padding-left: 40px;"></i> 打开游戏后， 如果发现游戏界面和之前玩的界面不一样，就肯定是山寨平台及外挂平台，请认准游戏界面，防伪签名，等级和ID，谨防被骗，海陆玩提示。
+					</p>
+					<p class="r">(我们的界面永远不会变)</p>
+					<div class="f">
+						<span>防作弊签名:</span>
+						前面大
+					</div>
+					<div class="o">
+						<span v-clicked>刷新头像</span>
+						<div class="r">
+							<img src="" alt="">
+							<div class="b">
+								<p>
+									<i>昵称昵称</i>
+									<i>ID:229741</i>
+								</p>
+								<div>
+									<i>1级</i>
+									<span><i></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</diglogx>
+		
+		<diglogx v-model="fks" class="bgs">
+			<template v-slot:content>
+				<div class="fks">
+					<ul>
+						<li>
+							<span>您的房卡:</span>
+							<i>190</i>张
+						</li>
+						<li>
+							<span>0</span>
+							张
+						</li>
+						<li>
+							<span>放入房卡</span>
+							<input type="number">
+							张
+						</li>
+					</ul>
+					<div class="btns">
+						<span v-clicked>制作房卡</span>
+					</div>
+					
+				</div>
+			</template>
+		</diglogx>
 		
 	</div>
 </template>
 
 <script>
+	import zx from './zx'
+	import mine from './mine'
 	export default {
 		data(){
 			return{
+				fdb:false,
+				keyborder:false,
+				grinfo:false,
+				fks:false,
+				pageType:2,
 				flag:{
 					lb:false,
 					cm:0,
@@ -332,6 +419,9 @@
 		mounted() {
 			
 		},
+		components:{
+			zx,mine
+		},
 		methods:{
 			goplay(){
 				this.flag.lb = false
@@ -504,7 +594,8 @@
 			box-sizing: border-box;
 			.m_W{
 				padding: 20px;
-				padding-top: 10px;
+				overflow: auto;
+				max-height: 70vh;
 			}
 			.top{
 				text-align: center;
@@ -552,6 +643,163 @@
 			}
 		}
 		
+		
+		.grinfo{
+			padding: 20px;
+			.z{
+				color: #BF28FF;
+				font-size: 20px;
+			}
+			&>.r{
+				color: red;
+				font-size: 20px;
+				padding-top: 10px;
+				text-align: center;
+			}
+			.f{
+				padding-left: 30px;
+				font-size: 20px;
+				color: #E88185;
+				padding: 10px 0;
+				border-bottom: 1px solid #99AFF1;
+				span{
+					color: #904E12;
+				}
+			}
+			
+			.o{
+				padding-top: 10px;
+				&>span{
+					text-align: center;
+					line-height: 35px;
+					display: inline-block;
+					width: 100px;
+					height: 35px;
+					color: #fff;
+					background: url(../../assets/img/gr/btn.png) no-repeat 0 0;
+					background-size: 100% 100%;
+				}
+				.r{
+					padding-top: 10px;
+					display: flex;
+					&>img{
+						width: 80px;
+						height: 80px;
+						background-color: #ccc;
+					}
+					.b{
+						flex: 1;
+						width: 100%;
+						padding-left: 10px;
+						p{
+							color: #A57143;
+							display: flex;
+							margin-bottom: 10px;
+							font-size: 20px;
+							i{
+								overflow: hidden;
+								flex: 1;
+							}
+						}
+						div{
+							padding-top: 10px;
+							display: flex;
+							&>i{
+								width: 40px;
+								color: red;
+								font-size: 20px;
+							}
+							span{
+								margin-top: 5px;
+								flex: 1;
+								margin-left: 40px;
+								width: 100%;
+								overflow: hidden;
+								height: 16px;
+								border-radius: 20px;
+								background-color: #D8B99A;
+								i{
+									display: block;
+									width: 33%;
+									height: 100%;
+									background-color: #8FF352;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		.fks{
+			padding-bottom: 5px;
+			ul{
+				padding: 20px;
+				padding-bottom: 0;
+				text-align: center;
+				font-size: 18px;
+				box-sizing: border-box;
+				li{
+					
+					box-sizing: border-box;
+					border-bottom: 1px solid #B8C5FA;
+				}
+				li:first-child{
+					padding-bottom: 5px;
+					font-size: 20px;
+					i{
+						display: inline-block;
+						width: 100px;
+						color: red;
+					}
+				}
+				li:nth-child(2){
+					padding: 5px 0;
+					font-size: 30px;
+					span{
+						display: inline-block;
+						width: 100px;
+						color: red;
+					}
+				}
+				li:last-child{
+					padding: 10px;
+					box-sizing: border-box;
+					background-color: #DFE7FF;
+					border-radius: 30px;
+					margin: 20px 0;
+					input{
+						display: inline-block;
+						width: 100px;
+						border: none;
+						background: none;
+						padding: 5px;
+						color: red;
+						font-size: 18px;
+					}
+				}
+			}
+			.btns{
+				background-color: #C7D4FE;
+				width: 97%;
+				padding: 10px 0;
+				margin: auto;
+				&>span{
+					text-align: center;
+					line-height: 55px;
+					display: block;
+					width: 160px;
+					font-size: 18px;
+					height: 60px;
+					color: #fff;
+					background: url(../../assets/img/gr/btn.png) no-repeat 0 0;
+					background-size: 100% 100%;
+					margin: auto;
+				}
+			}
+			
+		}
+		
 	}
 
 	
@@ -568,7 +816,13 @@
 		.g_diglog{
 			.main{
 				top: 10%;
-				background-size: 100% 110%;
+				background-size: 100% 100%;
+			}
+		}
+		.bgs{
+			.main{
+				top: 20%;
+				background-size: 100% 100%;
 			}
 		}
 	}
