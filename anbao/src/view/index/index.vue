@@ -242,7 +242,7 @@
 				keyborder:false,
 				grinfo:false,
 				fks:false,
-				pageType:2,
+				pageType:0,
 				flag:{
 					lb:false,
 					cm:0,

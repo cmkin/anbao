@@ -241,6 +241,19 @@
 					case 0:
 						this.$router.push('/invitation')
 					break;
+					case 1:
+						this.$router.push('/group')
+					break;
+					case 2:
+						this.$dialog.confirm({
+						  title: '温馨提示',
+						  message: '是否关闭续局功能，确定后将会终止所有正在进行的房间的续局功能',
+						}).then(() => {
+						  // on close
+						}).catch(() => {
+							// on cancel
+						});
+					break;
 				}
 			}
 		}

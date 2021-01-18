@@ -41,6 +41,14 @@ const routes = [{
 			noCheak: true
 		},
 	},
+	{
+		path: '/group',
+		component: () => import('_v/group/index'),
+		meta: {
+			title: "",
+			noCheak: true
+		},
+	}
 
 
 
